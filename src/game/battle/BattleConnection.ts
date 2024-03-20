@@ -4,9 +4,10 @@ import { newGameAuth } from "~/blockchain/functions/gameplay";
 import { Socket, io } from "socket.io-client";
 import { Settings } from "../data/Settings";
 import { getWalletAddress, isWalletConnected } from "~/blockchain/functions/auth";
-import { ClaimRewardData, GameCompleteData, PackTitle, SkillRequest, StartGameData } from "./Types";
+import { ClaimRewardData, DebugTestData, GameCompleteData, PackTitle, SkillRequest, StartGameData } from "./Types";
 import { GameEvent, GameEventDispatcher } from "../events/GameEvents";
 import { Signal } from "../utils/events/Signal";
+import { useWallet } from "@/services";
 
 export enum ConnectionEvent {
     disconnect = 'disconnect'
@@ -99,12 +100,15 @@ export class BattleConnection extends MyEventDispatcher {
     }
 
     private signProcess1() {
-        if (!isWalletConnected()) {
-            NetworkAuth().then((aWallet: string) => {
-                this.signProcess2();
-            }).catch((reason) => {
-                alert(reason);
-                GameEventDispatcher.dispatchEvent(GameEvent.BATTLE_SEARCHING_ERROR, { reason: reason });
+        let ws = useWallet();
+        if (!ws.connected) {
+            ws.connect('metamask').then((aIsSuccess: boolean) => {
+                if (aIsSuccess) {
+                    this.signProcess2();
+                }
+                else {
+                    GameEventDispatcher.dispatchEvent(GameEvent.BATTLE_SEARCHING_ERROR, { reason: 'not success' });
+                }
             });
         }
         else {
@@ -135,14 +139,17 @@ export class BattleConnection extends MyEventDispatcher {
     }
 
     sendSearchGame() {
-        this._socket.emit(PackTitle.startSearchGame);
+        this._socket.emit(PackTitle.startSearchGame, {
+            isFreeConnect: Settings.BATTLE.freeConnect
+        });
     }
 
-    // sendLaserClick() {
-    //     this._socket.emit(PackTitle.planetLaser, {
-    //         cmd: 'click'
-    //     });
-    // }
+    sendSearchGameBot() {
+        this._socket.emit(PackTitle.startSearchGame, {
+            withBot: true,
+            isFreeConnect: Settings.BATTLE.freeConnect
+        });
+    }
 
     sendSkillActionClick(aSkillId: number) {
         let data: SkillRequest = {
@@ -160,12 +167,6 @@ export class BattleConnection extends MyEventDispatcher {
         this._socket.emit(PackTitle.skill, data);
     }
 
-    sendSearchGameBot() {
-        this._socket.emit(PackTitle.startSearchGame, {
-            withBot: true
-        });
-    }
-
     sendStopSearchingGame() {
         this._socket.emit(PackTitle.stopSearchGame);
     }
@@ -176,6 +177,20 @@ export class BattleConnection extends MyEventDispatcher {
 
     sendClaimReward(aData: ClaimRewardData) {
         this._socket.emit(PackTitle.claimReward, aData);
+    }
+
+    sendTestWinBattle() {
+        let data: DebugTestData = {
+            action: 'win'
+        }
+        this._socket.emit(PackTitle.debugTest, data);
+    }
+
+    sendTestLossBattle() {
+        let data: DebugTestData = {
+            action: 'loss'
+        }
+        this._socket.emit(PackTitle.debugTest, data);
     }
 
 }

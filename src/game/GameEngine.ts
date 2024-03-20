@@ -12,7 +12,8 @@ import { GameCompleteData, PackTitle, StartGameData } from "./battle/Types";
 import { GameEvent, GameEventDispatcher } from "./events/GameEvents";
 import { getWalletAddress } from "~/blockchain/functions/auth";
 import { FrontEvents } from "./events/FrontEvents";
-import { getUserWinContractBalance } from "~/blockchain/boxes";
+import { OpenBox, getUserBoxesToOpen, getUserWinContractBalance } from "~/blockchain/boxes";
+import { useWallet } from "@/services";
 
 export class GameEngine extends MyBasicClass {
     private _renderer: GameRenderer;
@@ -53,9 +54,37 @@ export class GameEngine extends MyBasicClass {
             claimReward: async () => {
                 
             },
-            claimBox: () => {
-
+            openBox: async () => {
+                let ws = useWallet();
+                if (!ws.connected) {
+                    alert('Wallet Not Connected!');
+                    return;
+                }
+                const boxId = Number(BLOCKCHAIN_DEBUG_GUI.boxId);
+                alert(`Trying to open Box ${boxId}`);
+                let openResult = ws.provider.openBox(boxId);
+                console.log(`openResult:`, openResult);
             },
+            getBoxList: async () => {
+                const wallet = getWalletAddress();
+                getUserBoxesToOpen(wallet).then((aList: number[]) => {
+                    let list = aList.map(val => Number(val));
+                    this.logDebug(`Box ids to open:`);
+                    if (Settings.isDebugMode) console.log(list);
+                    if (list.length > 0) {
+                        let ids: string = '';
+                        for (let i = 0; i < list.length; i++) {
+                            ids += String(`${list[i]}, `);
+                        }
+                        alert(`You have ${list.length} boxes for open.
+                        ids: ${ids}`);
+                        // GameEventDispatcher.showBoxOpenScreen({ list });
+                    }
+                    else {
+                        alert(`No box found for this user...`);
+                    }
+                });
+            }
         }
 
         Settings.datGui = new datGui.GUI();
@@ -70,7 +99,8 @@ export class GameEngine extends MyBasicClass {
             this.logDebug(`boxId: ${BLOCKCHAIN_DEBUG_GUI.boxId}`);
         }).name(`Box id`);
 
-        f.add(BLOCKCHAIN_DEBUG_GUI, 'claimBox');
+        f.add(BLOCKCHAIN_DEBUG_GUI, 'openBox');
+        f.add(BLOCKCHAIN_DEBUG_GUI, 'getBoxList');
 
     }
 

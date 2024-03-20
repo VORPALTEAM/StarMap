@@ -25,6 +25,8 @@ export enum PackTitle {
 
     claimReward = 'claimReward',
 
+    debugTest = 'debugTest'
+
 }
 
 export type ObjectType = 'Star' | 'Planet' | 'Tower' | 'FighterShip' | 'BattleShip' | 'Homing';
@@ -88,11 +90,14 @@ export type AttackData = {
     isCrit?: boolean
 }
 
+export type PlanetLaserSkin = 'blue' | 'red' | 'white' | 'violet';
+
 export type PlanetLaserData = {
     planetId: number,
-    pos: { x, y, z },
-    dir: { x, y, z },
-    length: number
+    pos: { x: number, y: number, z: number },
+    dir: { x: number, y: number, z: number },
+    length: number,
+    skin: PlanetLaserSkin
 }
 
 export type DamageInfo = {
@@ -123,6 +128,10 @@ export type ExpData = {
     skills: SkillData[]
 }
 
+export type BoxOpenData = {
+    list: number[]
+}
+
 export type SkillRequest = {
     action: 'levelUp' | 'click',
     skillId: number
@@ -132,4 +141,8 @@ export type ClaimRewardData = {
     type: 'reward' | 'box',
     action?: 'request' | 'accept' | 'reject',
     reasone?: any
+}
+
+export type DebugTestData = {
+    action: 'win' | 'loss'
 }

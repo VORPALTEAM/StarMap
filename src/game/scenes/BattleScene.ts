@@ -74,6 +74,7 @@ export class BattleScene extends MyEventDispatcher implements IUpdatable {
         FrontEvents.onBattleAbilityLevelUpClick.add(this.onFrontSkillUpClick, this);
         FrontEvents.onBattleFinalClaimRewardClick.add(this.onFrontClaimRewardClick, this);
         FrontEvents.onBattleFinalClaimBoxClick.add(this.onFrontClaimBoxClick, this);
+        FrontEvents.onBattleRewardCloseClick.add(this.onBattleRewardCloseClick, this);
     }
 
     private initDebug() {
@@ -111,21 +112,17 @@ export class BattleScene extends MyEventDispatcher implements IUpdatable {
                 this._connection.sendExitGame();
             },
             testBattleWin: () => {
-                GameEventDispatcher.battleComplete({
-                    status: 'win'
-                });
+                this._connection.sendTestWinBattle();
             },
-            testBattleWinBox: () => {
-                GameEventDispatcher.battleComplete({
-                    status: 'win',
-                    showBoxClaim: true,
-                    boxLevel: 1
-                });
-            },
+            // testBattleWinBox: () => {
+            //     GameEventDispatcher.battleComplete({
+            //         status: 'win',
+            //         showBoxClaim: true,
+            //         boxLevel: 1
+            //     });
+            // },
             testBattleLoss: () => {
-                GameEventDispatcher.battleComplete({
-                    status: 'loss'
-                });
+                this._connection.sendTestLossBattle();
             },
 
         }
@@ -136,8 +133,8 @@ export class BattleScene extends MyEventDispatcher implements IUpdatable {
         // f.add(DATA, 'withdrawgame').name('Withdraw');
         f.add(DATA, 'exitgame').name('Exit Game');
         // f.add(DATA, 'winScreenTest').name('Win Screen Test');
-        f.add(DATA, 'testBattleWin').name('Test Battle Win NO Box');
-        f.add(DATA, 'testBattleWinBox').name('Test Battle Win Box');
+        f.add(DATA, 'testBattleWin').name('Test Battle Win');
+        // f.add(DATA, 'testBattleWinBox').name('Test Battle Win Box');
         f.add(DATA, 'testBattleLoss').name('Test Battle Loss');
 
     }
@@ -185,6 +182,10 @@ export class BattleScene extends MyEventDispatcher implements IUpdatable {
     private onFrontClaimBoxClick() {
         this.logDebug('onFrontOpenBoxClick...');
         this.claimBox();
+    }
+
+    private onBattleRewardCloseClick() {
+        this.emit(BattleSceneEvent.onCloseBattle);
     }
     
     private onGameSearchPack(aData: {
@@ -269,13 +270,13 @@ export class BattleScene extends MyEventDispatcher implements IUpdatable {
                         if (list.length > 0) {
                             this._boxIdList = list;
                             alert(`You have ${list.length} boxes for open`);
-                            GameEventDispatcher.showBoxOpenScreen();
+                            GameEventDispatcher.showBoxOpenScreen({list});
                         }
                         else {
                             alert(`No box found for this user...`);
                         }
                         // temp
-                        this.emit(BattleSceneEvent.onCloseBattle);
+                        // this.emit(BattleSceneEvent.onCloseBattle);
                     });
                     break;
                 case 'reject':
