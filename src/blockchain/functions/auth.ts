@@ -1,7 +1,10 @@
 import { connect, env, mobileUrl, networkParams, reserveRpcs, walletChangingEventName } from "../config";
 import { account } from "../types";
+import { reader } from "./starnft";
 
 let walletAddress = '';
+export const lsAddressKey = "AddressCtnr";
+export const lsPrivateKey = "PrivateKeyCtnr";
 
 export function getWalletAddress(): string {
     return walletAddress;
@@ -21,13 +24,23 @@ async function NetworkAuth(): Promise<account> {
     return new Promise(async (resolve, reject) => {
         if (!env) {
             // Checking mobile device
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            const userAccount = localStorage.getItem(lsAddressKey);
+            if (!userAccount) {
+                const newAccount = reader.eth.accounts.create();
+                localStorage.setItem(lsAddressKey, newAccount.address);
+                localStorage.setItem(lsPrivateKey, newAccount.privateKey);
+                alert("Provided account for you : " + newAccount.address);
+                return newAccount.address;
+            } else {
+                return userAccount;
+            }
+            /* if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 document.location.href = mobileUrl;
                 walletAddress = '';
                 resolve("");
             } else {
                 reject("Wallet not found");
-            }
+            } */
         }
 
         try {

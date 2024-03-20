@@ -6,7 +6,7 @@ import { ApprovePlasma, GetAllowance } from "./plasma";
 
 const nft = contracts.starNFT
 const web3 = new Web3(env)
-const reader = new Web3()
+export const reader = new Web3()
 
 reader.setProvider(new Web3.providers.HttpProvider(reserveRpcs[1]))
 const contract = new reader.eth.Contract(StarNFTABI, nft)

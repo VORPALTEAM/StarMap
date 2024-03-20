@@ -1,6 +1,8 @@
 import { w3cwebsocket as WebSocket } from 'websocket';
 import Web3 from "web3";
 import { wsServerUrl, env } from "../config";
+import { lsAddressKey, lsPrivateKey } from './auth';
+import { reader } from './starnft';
 
 export async function GameAuth(account: string): Promise<WebSocket | null> {
     if (!env || !account) {
@@ -26,13 +28,24 @@ export async function GameAuth(account: string): Promise<WebSocket | null> {
                     }
 
                     if (!isAuthRequested) {
+                        const tempAccount = localStorage.getItem(lsAddressKey);
                         const dt = new Date().getTime();
                         const signMsg = "auth_" + String(dt - (dt % 600000));
-                        const signature = await web3.eth.personal.sign(
-                            signMsg,
-                            account,
-                            ""
-                        );
+                        let signature: string;
+                        if (tempAccount) {
+                            const tempPK = localStorage.getItem(lsPrivateKey);
+                            signature = await reader.eth.personal.sign(
+                                signMsg,
+                                account,
+                                tempPK
+                            );
+                        } else {
+                            signature = await web3.eth.personal.sign(
+                                signMsg,
+                                account,
+                                ""
+                            );
+                        }
                         wss.send(
                             JSON.stringify({
                                 action: "auth",
@@ -64,11 +77,22 @@ export async function GenerateSignature(account: string): Promise<string> {
         const dt = new Date().getTime();
         const signMsg = "auth_" + String(dt - (dt % 600000));
         try {
-            const signature = await web3.eth.personal.sign(
-                signMsg,
-                account,
-                ""
-            );
+            const tempAccount = localStorage.getItem(lsAddressKey);
+            let signature: string;
+            if (tempAccount) {
+                const tempPK = localStorage.getItem(lsPrivateKey);
+                signature = await reader.eth.personal.sign(
+                    signMsg,
+                    account,
+                    tempPK
+                );
+            } else {
+                signature = await web3.eth.personal.sign(
+                    signMsg,
+                    account,
+                    ""
+                );
+            }
             resolve(signature);
         } catch (e) {
             reject("Sign failed : " + e.message)
