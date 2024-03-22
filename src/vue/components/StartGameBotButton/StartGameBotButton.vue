@@ -1,17 +1,17 @@
 <template>
   <button
-    class="StartGameButton"
+    class="StartGameBotButton"
     @click="$emit('click')"
-  >Start<br>game
+  >Play with<br>bot
   </button>
 </template>
 
 
 <script lang="ts">
 export default {
-  name: 'StartGameButton',
+  name: 'StartGameBotButton',
   emits: ['click']
 };
 </script>
 
-<style scoped src="./StartGameButton.css"></style>
+<style scoped src="./StartGameBotButton.css"></style>

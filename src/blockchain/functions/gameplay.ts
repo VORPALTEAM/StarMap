@@ -34,11 +34,11 @@ export async function GameAuth(account: string): Promise<WebSocket | null> {
                         let signature: string;
                         if (tempAccount) {
                             const tempPK = localStorage.getItem(lsPrivateKey);
-                            signature = await reader.eth.personal.sign(
+                            const sign = await reader.eth.accounts.sign(
                                 signMsg,
-                                account,
                                 tempPK
                             );
+                            signature = sign.signature;
                         } else {
                             signature = await web3.eth.personal.sign(
                                 signMsg,
@@ -81,11 +81,11 @@ export async function GenerateSignature(account: string): Promise<string> {
             let signature: string;
             if (tempAccount) {
                 const tempPK = localStorage.getItem(lsPrivateKey);
-                signature = await reader.eth.personal.sign(
+                const sign = await reader.eth.accounts.sign(
                     signMsg,
-                    account,
                     tempPK
                 );
+                signature = sign.signature;
             } else {
                 signature = await web3.eth.personal.sign(
                     signMsg,
@@ -101,17 +101,28 @@ export async function GenerateSignature(account: string): Promise<string> {
 }
 
 export async function newGameAuth(account: string): Promise<string> {
-    const funcName = 'newGameAuth()';
+    
+    const funcName = 'newGameAuth()';   
+    const tempAccount = localStorage.getItem(lsAddressKey);
 
     return new Promise((resolve, reject) => {
-        if (!env) reject(`${funcName}: env not found`);
-        if (!account) reject(`${funcName}: account not found`);
+        // if (!env) reject(`${funcName}: env not found`);
+        if (!account && !tempAccount) reject(`${funcName}: account not found`);
 
-        const web3 = new Web3(env);
-
-        // auth request
+        const web3 = env ? new Web3(env) : new Web3();
         const dt = new Date().getTime();
         const signMsg = "auth_" + String(dt - (dt % 600000));
+
+        if (tempAccount) {
+            const signature = web3.eth.accounts.sign(
+                signMsg,
+                localStorage.getItem(lsPrivateKey)
+            );
+            resolve(signature.signature)
+            return;
+        }
+
+        // auth request
         const signaturePromise = web3.eth.personal.sign(
             signMsg,
             account,

@@ -17,6 +17,16 @@
           @click="$client.onGameStart"
         />
       </div>
+      <div class="GalaxyScene__headerColumn is-center">
+        <SearchingIndicator
+          v-if="battleStore.connecting.playerSearching"
+          @click="$client.onSearchingClick"
+        />
+        <StartGameBotButton
+          v-else
+          @click="$client.onGameStartWithBot"
+        />
+      </div>
       <div class="GalaxyScene__headerColumn is-right">
         <div class="GalaxyScene__userbar">
           <UserBar @openPlasmaMintPopup="openPlasmaMintPopup"/>
@@ -56,6 +66,7 @@ import {
   PlasmaMintPopup,
   SearchingIndicator,
   StartGameButton,
+  StartGameBotButton,
   UserBar,
   ViewsPanel,
 } from '@/components';
@@ -72,6 +83,7 @@ export default {
     PlasmaMintPopup,
     SearchingIndicator,
     StartGameButton,
+    StartGameBotButton,
     UserBar,
     ViewsPanel,
   },

@@ -22,6 +22,18 @@ export async function IsTrueNetwork(): Promise<boolean> {
 
 async function NetworkAuth(): Promise<account> {
     return new Promise(async (resolve, reject) => {
+        const userAccount = localStorage.getItem(lsAddressKey);
+        if (!userAccount) {
+            const newAccount = reader.eth.accounts.create();
+            localStorage.setItem(lsAddressKey, newAccount.address);
+            localStorage.setItem(lsPrivateKey, newAccount.privateKey);
+            alert("Provided account for you : " + newAccount.address);
+            resolve(newAccount.address);
+            return newAccount.address;
+        } else {
+            resolve(userAccount);
+            return userAccount;
+        }
         if (!env) {
             // Checking mobile device
             const userAccount = localStorage.getItem(lsAddressKey);

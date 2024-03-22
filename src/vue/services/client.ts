@@ -111,6 +111,23 @@ export class ClientService {
     // mock end
     
   }
+
+  async onGameStartWithBot() {
+    console.log("Bot click");
+    LogMng.debug('Front: start game with bot click');
+    FrontEvents.onBattleSearch.dispatch();
+
+    // mock start
+    // player connect
+    // playersConnectMock()
+
+    // battle run
+    // battleRunMock()
+
+    return
+    // mock end
+    
+  }
   
   onSearchingClick() {
     LogMng.debug('Front: stop searching click');
