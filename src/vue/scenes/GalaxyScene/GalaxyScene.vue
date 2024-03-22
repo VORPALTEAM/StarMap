@@ -8,28 +8,13 @@
         <Logo />
       </div>
       <div class="GalaxyScene__headerColumn is-center">
-        <SearchingIndicator
-          v-if="battleStore.connecting.playerSearching"
-          @click="$client.onSearchingClick"
-        />
-        <StartGameButton
-          v-else
-          @click="$client.onGameStart"
-        />
-      </div>
-      <div class="GalaxyScene__headerColumn is-center">
-        <SearchingIndicator
-          v-if="battleStore.connecting.playerSearching"
-          @click="$client.onSearchingClick"
-        />
-        <StartGameBotButton
-          v-else
-          @click="$client.onGameStartWithBot"
-        />
+        <SearchingIndicator v-if="battleStore.connecting.playerSearching" @click="$client.onSearchingClick" />
+        <StartGameButton v-if="!battleStore.connecting.playerSearching" @click="$client.onGameStart" />
+        <StartGameBotButton v-if="!battleStore.connecting.playerSearching" @click="$client.onGameStartWithBot" />
       </div>
       <div class="GalaxyScene__headerColumn is-right">
         <div class="GalaxyScene__userbar">
-          <UserBar @openPlasmaMintPopup="openPlasmaMintPopup"/>
+          <UserBar @openPlasmaMintPopup="openPlasmaMintPopup" />
         </div>
       </div>
     </div>
@@ -50,11 +35,7 @@
         <ModesPanel />
       </div>
     </div>
-    <PlasmaMintPopup
-      v-if="showPlasmaMintPopup"
-      v-click-outside="closePlasmaMintPopup"
-      @close="closePlasmaMintPopup"
-    />
+    <PlasmaMintPopup v-if="showPlasmaMintPopup" v-click-outside="closePlasmaMintPopup" @close="closePlasmaMintPopup" />
   </div>
 </template>
 

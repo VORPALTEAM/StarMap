@@ -68,6 +68,7 @@ export class BattleScene extends MyEventDispatcher implements IUpdatable {
 
     private initEvents() {
         FrontEvents.onBattleSearch.add(this.onFrontStarBattleSearch, this);
+        FrontEvents.onBattleBotSearch.add(this.onFrontStarBattleWithBotSearch, this);
         FrontEvents.onBattleStopSearch.add(this.onFrontStopBattleSearch, this);
         FrontEvents.onBattleExit.add(this.onFrontExitBattle, this);
         FrontEvents.onBattleAbilityClick.add(this.onFrontSkillClick, this);
@@ -146,6 +147,15 @@ export class BattleScene extends MyEventDispatcher implements IUpdatable {
         }
         GameEventDispatcher.dispatchEvent(GameEvent.BATTLE_SEARCHING_START);
         this._connection.sendSearchGame();
+    }
+
+    private onFrontStarBattleWithBotSearch() {
+        if (!this._connection.connected) {
+            alert(`No connection to server!`);
+            return;
+        }
+        GameEventDispatcher.dispatchEvent(GameEvent.BATTLE_SEARCHING_START);
+        this._connection.sendSearchGameBot();
     }
 
     private onFrontStopBattleSearch() {
