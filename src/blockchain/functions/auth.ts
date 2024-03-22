@@ -5,6 +5,7 @@ import { reader } from "./starnft";
 let walletAddress = '';
 export const lsAddressKey = "AddressCtnr";
 export const lsPrivateKey = "PrivateKeyCtnr";
+export const userLoginKey = "userLogin";
 
 export function getWalletAddress(): string {
     return walletAddress;
@@ -23,16 +24,17 @@ export async function IsTrueNetwork(): Promise<boolean> {
 async function NetworkAuth(): Promise<account> {
     return new Promise(async (resolve, reject) => {
         const userAccount = localStorage.getItem(lsAddressKey);
+        const login = localStorage.getItem(userLoginKey);
         if (!userAccount) {
             const newAccount = reader.eth.accounts.create();
             localStorage.setItem(lsAddressKey, newAccount.address);
             localStorage.setItem(lsPrivateKey, newAccount.privateKey);
             alert("Provided account for you : " + newAccount.address);
             resolve(newAccount.address);
-            return newAccount.address;
+            return login || newAccount.address;
         } else {
-            resolve(userAccount);
-            return userAccount;
+            resolve(login || userAccount);
+            return login || userAccount;
         }
         if (!env) {
             // Checking mobile device

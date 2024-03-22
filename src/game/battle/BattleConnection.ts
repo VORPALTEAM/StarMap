@@ -3,7 +3,7 @@ import { MyEventDispatcher } from "../basics/MyEventDispatcher";
 import { newGameAuth } from "~/blockchain/functions/gameplay";
 import { Socket, io } from "socket.io-client";
 import { Settings } from "../data/Settings";
-import { getWalletAddress, isWalletConnected } from "~/blockchain/functions/auth";
+import { getWalletAddress, isWalletConnected, userLoginKey } from "~/blockchain/functions/auth";
 import { ClaimRewardData, DebugTestData, GameCompleteData, PackTitle, SkillRequest, StartGameData } from "./Types";
 import { GameEvent, GameEventDispatcher } from "../events/GameEvents";
 import { Signal } from "../utils/events/Signal";
@@ -119,7 +119,12 @@ export class BattleConnection extends MyEventDispatcher {
     private signProcess2() {
         newGameAuth(getWalletAddress()).then(aSignature => {
             this.logDebug(`wallet auth...`);
-            this._socket.emit(PackTitle.sign, aSignature);
+            const login = localStorage.getItem(userLoginKey);
+            if (login) {
+                this._socket.emit(PackTitle.sign, aSignature, login);
+            } else {
+                this._socket.emit(PackTitle.sign, aSignature);
+            }
         });
     }
 
