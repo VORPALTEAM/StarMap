@@ -173,7 +173,8 @@ export class ClientService {
 
   // TODO: call this method from GUI
   onBattleInventoryItemActivate(aItemId: number) {
-    console.log('onBattleInventoryItemActivate', aItemId)
+    console.log('onBattleInventoryItemActivate', aItemId);
+    FrontEvents.onBattleInventoryItemActivate.dispatch(aItemId);
   }
 
   onBattleExit() {

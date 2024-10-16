@@ -116,6 +116,7 @@ export class BattleScene extends BasicScene {
     FrontEvents.onBattleFinalClaimRewardClick.add(this.onFrontClaimRewardClick, this);
     FrontEvents.onBattleFinalClaimBoxClick.add(this.onFrontClaimBoxClick, this);
     FrontEvents.onBattleRewardCloseClick.add(this.onFrontBattleRewardCloseClick, this);
+    FrontEvents.onBattleInventoryItemActivate.add(this.onFrontBattleInventoryItemActivate, this);
     FrontEvents.onBattleEmotion.add(this.onFrontBattleEmotion, this);
     FrontEvents.onBattlePurchaseRequest.add(this.onFrontBattleShopPurchaseRequest, this);
   }
@@ -134,6 +135,7 @@ export class BattleScene extends BasicScene {
     FrontEvents.onBattleFinalClaimRewardClick.remove(this.onFrontClaimRewardClick, this);
     FrontEvents.onBattleFinalClaimBoxClick.remove(this.onFrontClaimBoxClick, this);
     FrontEvents.onBattleRewardCloseClick.remove(this.onFrontBattleRewardCloseClick, this);
+    FrontEvents.onBattleInventoryItemActivate.remove(this.onFrontBattleInventoryItemActivate, this);
     FrontEvents.onBattleEmotion.remove(this.onFrontBattleEmotion, this);
     FrontEvents.onBattlePurchaseRequest.remove(this.onFrontBattleShopPurchaseRequest, this);
   }
@@ -275,6 +277,10 @@ export class BattleScene extends BasicScene {
     // this.emit(BattleSceneEvent.onCloseBattle);
     AudioMng.getInstance().playSfx({ alias: AudioAlias.battleBtnClick });
     this.closeScene();
+  }
+
+  private onFrontBattleInventoryItemActivate(aItemId: number) {
+    this._connection.sendInventoryItemActivate(aItemId);
   }
 
   private onFrontBattleEmotion(aEmotion: Emotion) {
