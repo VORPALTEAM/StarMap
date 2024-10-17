@@ -22,8 +22,9 @@
             :level="battleStore.process.state.level"
             :gold="battleStore.process.state.gold"
             :items="battleStore.shop.items"
-            @action="$client.onBattleAction" />
+            @action="$client.onBattleAction" />     
         </div>
+
     </div>
 </template>
 

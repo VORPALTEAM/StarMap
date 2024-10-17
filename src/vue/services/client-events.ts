@@ -155,6 +155,13 @@ export class ClientEventsService {
             scenesStore.setSceneMode('preGameCounter');
             await wait(5000);
             scenesStore.setSceneMode('process');
+            battleStore.process.setSkill('satelliteFire', {
+              level: 1,
+              levelUpAvailable: false,
+              cooldown: {
+                duration: 3000
+              }
+            });
             break;
           
           default:
@@ -206,7 +213,7 @@ export class ClientEventsService {
           },
           skills: {
             satelliteFire: {
-              level: 1,
+              level: 0,
               levelUpAvailable: false,
               cooldown: {
                 duration: 3000,
@@ -236,17 +243,7 @@ export class ClientEventsService {
           }
         });
 
-        // await wait(3000);
-
-        // scenesStore.setSceneMode('process');
-
         break;
-      
-      // case GameEvent.BATTLE_PLAYER_PICK: 
-      //   await wait(3000);
-
-      //   scenesStore.setSceneMode('process');
-      //   break;
 
       case GameEvent.BATTLE_COMPLETE_SHOW:
         const typeByStatus: {[index: string]: 'victory' | 'defeat'} = {

@@ -28,7 +28,7 @@
   height: 100%;
 }
 
-/* .BaseControl[disabled], */
+.BaseControl[disabled],
 .BaseControl.cooldown {
   cursor: default;
   pointer-events: none;
@@ -68,7 +68,7 @@
   cursor: grab;
 }
 
-.BaseControl.canLevelUp:active {
+.BaseControl.canLevelUp {
   cursor: grabbing;
   pointer-events: all;
 }
@@ -167,8 +167,6 @@
 
 .BaseControl__levelUp {
   position: absolute;
-  pointer-events: all;
-
   top: -10%;
   left: 0;
   width: 100%;

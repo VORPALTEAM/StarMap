@@ -187,11 +187,11 @@ export default {
   },
 
   mounted() {
-  window.addEventListener('dragend', this.handleDragEnd);
+ 
 },
 
 beforeDestroy() {
-  window.removeEventListener('dragend', this.handleDragEnd);
+ 
 },
 
   methods: {
@@ -219,13 +219,16 @@ beforeDestroy() {
     this.dragging = false;
     const content = this.$refs.skillContent as HTMLElement;
     content.style.transform = '';
-    this.$emit('levelUp');
-    console.log('handleDrop')
+    const deltaX = event.clientX - this.dragStartX;
+    const deltaY = event.clientY - this.dragStartY;
+    if (Math.abs(deltaX) > 0 || Math.abs(deltaY) > 0) {
+      this.$emit('levelUp');
+    }
   },
   handleDrop() {
 },
   handleTouchStart(event: TouchEvent) {
-    if (!this.canLevelUp) return;
+    if (!this.canLevelUp || this.hasCooldown) return;
     this.dragging = true;
     const touch = event.touches[0];
     this.touchStartX = touch.clientX;
@@ -236,6 +239,7 @@ beforeDestroy() {
   },
   handleTouchMove(event: TouchEvent) {
     if (!this.dragging) return;
+    event.preventDefault();
     const touch = event.touches[0];
     const deltaX = touch.clientX - this.touchStartX;
     const deltaY = touch.clientY - this.touchStartY;
@@ -248,8 +252,13 @@ beforeDestroy() {
     this.dragging = false;
     const content = this.$refs.skillContent as HTMLElement;
     content.style.transform = '';
-    console.log('handleDrop')
-    this.$emit('levelUp');
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - this.touchStartX;
+    const deltaY = touch.clientY - this.touchStartY;
+    if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+      this.$emit('levelUp');
+    }
   }
   }
 }
