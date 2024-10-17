@@ -317,6 +317,14 @@ export class BattleConnection extends MyEventDispatcher {
     this._socket.emit(PackTitle.debugTest, data);
   }
 
+  sendInventoryItemActivate(aItemId: number) {
+    let data: ShopData = {
+      action: 'inventoryItemActivate',
+      itemId: aItemId
+    }
+    this._socket.emit(PackTitle.shop, data);
+  }
+
   sendEmotion(aEmotion: Emotion) {
     let data: EmotionData = {
       emotion: aEmotion
