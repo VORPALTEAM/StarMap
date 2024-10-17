@@ -65,6 +65,11 @@
     </template>
   
   </button>
+    <div v-if="canLevelUp" class="BaseControl__levelUp-bg">
+      <svg width="80" height="92" viewBox="0 0 80 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M41.3889 0.374101C40.9666 0.129013 40.4876 0 40 0C39.5124 0 39.0334 0.129013 38.6111 0.374101L1.38889 21.9779C0.966614 22.223 0.615952 22.5755 0.37215 23C0.128348 23.4245 -3.0765e-06 23.906 0 24.3962L7.31633e-06 67.6038C-6.9749e-07 68.094 0.128349 68.5755 0.37215 69C0.61595 69.4245 0.966612 69.777 1.38889 70.0221L38.6111 91.6259C39.0334 91.871 39.5124 92 40 92C40.4876 92 40.9666 91.871 41.3889 91.6259L78.6111 70.0221C79.0334 69.777 79.384 69.4245 79.6279 69C79.8717 68.5755 80 68.094 80 67.6038V24.3962C80 23.906 79.8717 23.4245 79.6279 23C79.384 22.5755 79.0334 22.223 78.6111 21.9779L41.3889 0.374101Z" fill="black"/>
+      </svg>
+    </div>
     <div
       v-if="canLevelUp"
       class="BaseControl__levelUp"
@@ -74,9 +79,21 @@
       @touchend="handleTouchEnd"
       >
       <div class="BaseControl__levelContainer">
-        <div v-for="(item, index) in 6" :key="index" class="BaseControl__levelAnimation">
-          <img src="/gui/images/pre-game-countdown/emotion-border.svg">
-        </div>
+        <svg width="74" height="62" viewBox="0 0 74 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M38.128 0.300751L72.8719 20.2609C73.2149 20.4579 73.4997 20.7413 73.6977 21.0826C73.8958 21.4239 74 21.811 74 22.2051V59.7551C74 60.1492 73.8957 60.5363 73.6977 60.8776C73.4997 61.2188 73.2149 61.5022 72.8719 61.6992C72.529 61.8963 72.1399 62 71.7439 62C71.3478 62 70.9588 61.8963 70.6158 61.6992L37.6281 61.3008C37.6281 61.3008 36.896 61 36.5 61C36.104 61 35.7149 61.1037 35.3719 61.3008L3.38414 61.6992C3.04117 61.8963 2.65212 62 2.25609 62C1.86006 62 1.47101 61.8963 1.12804 61.6992C0.78507 61.5022 0.500259 61.2188 0.302246 60.8776C0.104234 60.5363 -2.73551e-06 60.1491 0 59.7551V22.205C4.53456e-06 21.811 0.104256 21.4238 0.30227 21.0826C0.500285 20.7413 0.785085 20.4579 1.12805 20.2609L35.872 0.300751C36.2149 0.103725 36.604 -6.17311e-06 37 2.75533e-10C37.396 -6.17311e-06 37.7851 0.103725 38.128 0.300751Z"
+                fill="#0167FF" />
+        </svg>
+         <svg width="74" height="62" viewBox="0 0 74 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M38.128 0.300751L72.8719 20.2609C73.2149 20.4579 73.4997 20.7413 73.6977 21.0826C73.8958 21.4239 74 21.811 74 22.2051V59.7551C74 60.1492 73.8957 60.5363 73.6977 60.8776C73.4997 61.2188 73.2149 61.5022 72.8719 61.6992C72.529 61.8963 72.1399 62 71.7439 62C71.3478 62 70.9588 61.8963 70.6158 61.6992L37.6281 61.3008C37.6281 61.3008 36.896 61 36.5 61C36.104 61 35.7149 61.1037 35.3719 61.3008L3.38414 61.6992C3.04117 61.8963 2.65212 62 2.25609 62C1.86006 62 1.47101 61.8963 1.12804 61.6992C0.78507 61.5022 0.500259 61.2188 0.302246 60.8776C0.104234 60.5363 -2.73551e-06 60.1491 0 59.7551V22.205C4.53456e-06 21.811 0.104256 21.4238 0.30227 21.0826C0.500285 20.7413 0.785085 20.4579 1.12805 20.2609L35.872 0.300751C36.2149 0.103725 36.604 -6.17311e-06 37 2.75533e-10C37.396 -6.17311e-06 37.7851 0.103725 38.128 0.300751Z"
+                fill="#0167FF" />
+        </svg>
+        <svg width="74" height="62" viewBox="0 0 74 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M38.128 0.300751L72.8719 20.2609C73.2149 20.4579 73.4997 20.7413 73.6977 21.0826C73.8958 21.4239 74 21.811 74 22.2051V59.7551C74 60.1492 73.8957 60.5363 73.6977 60.8776C73.4997 61.2188 73.2149 61.5022 72.8719 61.6992C72.529 61.8963 72.1399 62 71.7439 62C71.3478 62 70.9588 61.8963 70.6158 61.6992L37.6281 61.3008C37.6281 61.3008 36.896 61 36.5 61C36.104 61 35.7149 61.1037 35.3719 61.3008L3.38414 61.6992C3.04117 61.8963 2.65212 62 2.25609 62C1.86006 62 1.47101 61.8963 1.12804 61.6992C0.78507 61.5022 0.500259 61.2188 0.302246 60.8776C0.104234 60.5363 -2.73551e-06 60.1491 0 59.7551V22.205C4.53456e-06 21.811 0.104256 21.4238 0.30227 21.0826C0.500285 20.7413 0.785085 20.4579 1.12805 20.2609L35.872 0.300751C36.2149 0.103725 36.604 -6.17311e-06 37 2.75533e-10C37.396 -6.17311e-06 37.7851 0.103725 38.128 0.300751Z"
+                fill="#0167FF" />
+        </svg>
       </div>
     </div>
 </div>
@@ -169,6 +186,14 @@ export default {
     }
   },
 
+  mounted() {
+ 
+},
+
+beforeDestroy() {
+ 
+},
+
   methods: {
   handleDragStart(event: DragEvent) {
     this.dragging = true;
@@ -179,14 +204,13 @@ export default {
     const content = this.$refs.skillContent as HTMLElement;
     const svgElement = content.querySelector('svg');
     svgElement.style.setProperty('opacity', '1', 'important');
-    this.$emit('levelUp');
   },
   handleDrag(event: DragEvent) {
     if (!event.clientX || !event.clientY) return;
-
+    
     const deltaX = event.clientX - this.dragStartX;
     const deltaY = event.clientY - this.dragStartY;
-
+    
     const content = this.$refs.skillContent as HTMLElement;
     const svgElement = content.querySelector('svg');
     content.style.transform = `translate(${deltaX}px, ${deltaY}px)`
@@ -195,12 +219,16 @@ export default {
     this.dragging = false;
     const content = this.$refs.skillContent as HTMLElement;
     content.style.transform = '';
+    const deltaX = event.clientX - this.dragStartX;
+    const deltaY = event.clientY - this.dragStartY;
+    if (Math.abs(deltaX) > 0 || Math.abs(deltaY) > 0) {
+      this.$emit('levelUp');
+    }
   },
   handleDrop() {
-    console.log('handleDrop')
 },
   handleTouchStart(event: TouchEvent) {
-    if (!this.canLevelUp) return;
+    if (!this.canLevelUp || this.hasCooldown) return;
     this.dragging = true;
     const touch = event.touches[0];
     this.touchStartX = touch.clientX;
@@ -208,14 +236,14 @@ export default {
     const content = this.$refs.skillContent as HTMLElement;
     const svgElement = content.querySelector('svg');
     svgElement.style.setProperty('opacity', '1', 'important');
-    this.$emit('levelUp');
   },
   handleTouchMove(event: TouchEvent) {
     if (!this.dragging) return;
+    event.preventDefault();
     const touch = event.touches[0];
     const deltaX = touch.clientX - this.touchStartX;
     const deltaY = touch.clientY - this.touchStartY;
-
+    
     const content = this.$refs.skillContent as HTMLElement;
     content.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
   },
@@ -225,19 +253,11 @@ export default {
     const content = this.$refs.skillContent as HTMLElement;
     content.style.transform = '';
 
-    // Check if the touch ended over the level up area
-    const levelUpElement = this.$refs.levelUp as HTMLElement;
-    if (levelUpElement) {
-      const touch = event.changedTouches[0];
-      const rect = levelUpElement.getBoundingClientRect();
-      if (
-        touch.clientX >= rect.left &&
-        touch.clientX <= rect.right &&
-        touch.clientY >= rect.top &&
-        touch.clientY <= rect.bottom
-      ) {
-        this.handleDrop();
-      }
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - this.touchStartX;
+    const deltaY = touch.clientY - this.touchStartY;
+    if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+      this.$emit('levelUp');
     }
   }
   }

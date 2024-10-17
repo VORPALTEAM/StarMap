@@ -9,10 +9,15 @@
                 <h3 class="ShopMenu__title orbitron-font --semi-bold">
                     SHOP
                 </h3>
-                <input class="ShopMenu__filter" placeholder="FILTER">
+                <input
+                    v-model="filterText"
+                    class="ShopMenu__filter"
+                    placeholder="FILTER"
+                    @input="filterItems"
+                >
                 <div class="ShopMenu__items">
                     <div
-                        v-for="(item, index) in items"
+                        v-for="(item, index) in filteredItems"
                         @click="handleItemClick(index)"
                         :key="index"
                         class="ShopMenu__item"     
@@ -127,7 +132,9 @@ export default {
                 "/assets/battleIcon/star.svg",
                 "/assets/battleIcon/ship.svg",
                 "/assets/battleIcon/linkor.svg"
-            ]
+            ],
+            filterText: '',
+            filteredItems: [],
         };
     },
 
@@ -201,11 +208,23 @@ export default {
             } else {
                 this.sell(this.selectedItem)
             }
-        }
+        },
+
+        filterItems() {
+            if (this.filterText.trim() === '') {
+                this.filteredItems = this.items;
+            } else {
+                const searchTerm = this.filterText.toLowerCase();
+                this.filteredItems = this.items.filter(item =>
+                    item.name.toLowerCase().includes(searchTerm)
+                );
+            }
+        },
     },
 
-   
-
+    created() {
+        this.filteredItems = this.items;
+    },
 }
 
 </script>
