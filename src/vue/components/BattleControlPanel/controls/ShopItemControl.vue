@@ -1,75 +1,78 @@
 <template>
-    <div v-if="inventoryList.length == 2" class="ShopItemControl__row">
-        <div class="ShopItemControl__item" @click="handleClick(inventoryList[0])">
-            <BaseControl 
-            :name="itemName[inventoryList[0]]" 
-            :disabled="false" 
-            :active="true"
-            />
-        </div>
-        <div class="ShopItemControl__item" @click="handleClick(inventoryList[1])">
-            <BaseControl 
-            :name="itemName[inventoryList[1]]" 
-            :disabled="false" 
-            :active="true"
-            />
-        </div>
-    </div>
-
-    <div v-if="inventoryList.length == 1" class="ShopItemControl__row">
-        <div class="ShopItemControl__item" @click="handleClick(inventoryList[0])">
-            <BaseControl 
-            :name="itemName[inventoryList[0]]" 
-            :disabled="false"
-            :active="true"
-            />
-        </div>
-        <div class="ShopItemControl__item">
-            <BaseControl :disabled="true" />
-        </div>
-    </div>
-
-    <div v-if="inventoryList.length == 0" class="ShopItemControl__row">
-        <div class="ShopItemControl__item">
-            <BaseControl :disabled="true" />
-        </div>
-        <div class="ShopItemControl__item">
-            <BaseControl :disabled="true" />
+    <div class="ShopItemControl__row">
+        <div v-for="(item, index) in displayItems" :key="index" class="ShopItemControl__item" @click="handleClick(item.order)">
+            <div v-if="item.name != ''">
+                <BaseControl 
+                :name="item.name" 
+                :disabled="item.disabled"
+                :active="!item.disabled"
+                />
+            </div>
+            <div v-else>
+                <BaseControl 
+                    :disabled="item.disabled"
+                    :active="!item.disabled"
+                />
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { BaseControl } from './BaseControl';
-import { PropType } from 'vue';
+import { PropType, computed } from 'vue';
 import { ShopItemData } from '~/game/battle/Types';
-import { useBattleStore } from '@/stores';
-import { mapStores } from 'pinia';
+
 export default {
     name: 'shopItemControl',
     components: {
         BaseControl
     },
-    computed: {
-        inventoryList() {
-            return this.battleStore.shop.inventoryList
-        },
-        ...mapStores(useBattleStore)
-    },
     props: {
         items: {
             type: Array as PropType<ShopItemData[]>,
+            default: () => [],
+        },
+        inventoryList: {
+            type: Array as PropType<number[]>,
+            default: () => [],
         },
     },
-    data() {
+    setup(props) {
+        const itemName = ['tower', 'star', 'ship', 'linkor'];
+
+        const displayItems = computed(() => {
+            const result = [
+                { order: null, name: '', disabled: true },
+                { order: null, name: '', disabled: true },
+            ];
+
+            props.inventoryList.forEach((id, index) => {
+                if (index < 2) {
+                    if(id == null) {
+                        result[index] = { order: id, name: '', disabled: true };
+                    } else {
+                        result[index] = {order: id, name: itemName[id], disabled: false };
+                    }
+                }
+            });
+
+            return result;
+        });       
+
         return {
-            itemName: ['tower', 'star', 'ship', 'linkor'],
-        }
+            displayItems,
+           
+        };
     },
     methods: {
         handleClick(itemId: number) {
-            console.log('handleClick', itemId)
-            this.$client.onBattleInventoryItemActivate(itemId);
+            if(itemId == null) {
+                return;
+            }
+            else {
+                this.$client.onBattleInventoryItemActivate(itemId);
+            }
         }
     }
 }

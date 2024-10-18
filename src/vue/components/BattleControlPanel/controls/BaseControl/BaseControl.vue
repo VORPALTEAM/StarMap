@@ -2,10 +2,10 @@
   <div class="BaseControl__container">
     <button
       class="BaseControl"
-      :class="{ active, disabled, cooldown: hasCooldown, hasContent: Boolean($slots.default),[name]: Boolean(name), canLevelUp: canLevelUp && !hasCooldown}"
+      :class="{ active, disabled, cooldown: hasCooldown, hasContent: Boolean($slots.default),[name]: Boolean(name), canLevelUp: canLevelUp}"
       :disabled="!active || disabled"
       ref="skillContent"
-      :draggable="canLevelUp && !hasCooldown"
+      :draggable="canLevelUp"
       @dragstart="handleDragStart"
       @drag="handleDrag"
       @dragend="handleDragEnd"

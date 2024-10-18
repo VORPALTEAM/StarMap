@@ -11,7 +11,10 @@
     <div class="BattleControlPanel__player">
       <div class="BattleControlPanel__addItem">
         <div class="BattleControlPanel__shopItems">
-          <ShopItemControl :items="items"/>
+          <ShopItemControl 
+          :items="items"
+          :inventoryList="inventoryList"
+          />
         </div>
         <div class="BattleControlPanel__score orbitron-font --semibold">
             <p>GOLD:</p>
@@ -133,12 +136,17 @@ export default {
     showEnemy: {
       type: Boolean,
       default: false
+    },
+    inventoryList: {
+      type: Array as PropType<number[]>,
+      default: () => []
     }
   },
 
   emits: {
     action: (payload: BattleActionPayload) => payload,  
 },
+ 
   methods: {
     call(actionType: BattleActionType) {
       this.$emit('action', {

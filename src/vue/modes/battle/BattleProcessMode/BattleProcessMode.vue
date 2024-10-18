@@ -41,6 +41,7 @@
           :level="battleStore.process.state.level"
           :gold="battleStore.process.state.gold"
           :items="battleStore.shop.items"
+          :inventoryList="battleStore.shop.inventoryList"
           :showEnemy="true"
           @action="$client.onBattleAction" 
           @showShopMenu="showShopMenu"
