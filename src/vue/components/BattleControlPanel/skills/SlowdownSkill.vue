@@ -14,7 +14,7 @@
       :cooldown="hasCooldown ? toSeconds(cooldown.duration) : null"
       :progress="cooldown ? cooldown.progress : 0"
       :params="params"
-      @click="$emit('apply')"
+      @click="handleClick"
       @levelUp="$emit('levelUp')"
     />
   </BaseSkill>
@@ -54,7 +54,12 @@ export default {
     }
   },
   methods: {
-    toSeconds
+    toSeconds,
+    handleClick() {
+      if (!this.hasCooldown) {
+        this.$emit('apply');
+      }
+    }
   }
 };
 </script>
