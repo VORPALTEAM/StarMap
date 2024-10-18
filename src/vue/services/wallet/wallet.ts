@@ -4,8 +4,8 @@ import { ReaderProvider } from '@/services/wallet/providers/reader-provider';
 import { WalletStoreState, useBattleStore, useWalletStore } from '@/stores';
 import { markRaw, watch } from 'vue';
 import { UniversalProvider } from './providers/universal-provider';
-import { InitWalletconnectModal } from '~/blockchainTotal/walletconnect/auth';
-import { BlockchainConnectService } from '~/blockchainTotal';
+import { InitWalletconnectModal } from '~/blockchain/walletconnect/auth';
+import { BlockchainConnectService } from '~/blockchain';
 import { getShortAddress } from '@/utils';
 
 let walletInstance: WalletService | null = null

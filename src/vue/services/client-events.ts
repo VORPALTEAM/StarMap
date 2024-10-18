@@ -6,7 +6,7 @@ import { wait } from '@/utils';
 import { LogMng } from '~/monax/LogMng';
 import { toast } from 'vue3-toastify';
 import { useWallet } from '@/services/wallet';
-import { BlockchainConnectService } from '~/blockchainTotal';
+import { BlockchainConnectService } from '~/blockchain';
 import { config } from '@/config';
 import { GlobalParams } from '~/game/data/GlobalParams';
 import { GameEvent } from '~/game/events/Types';

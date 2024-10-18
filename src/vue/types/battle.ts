@@ -1,4 +1,4 @@
-import { Race } from "../../blockchainTotal/types";
+import { Race } from "../../blockchain/types";
 
 export type BattleActionType = 'satelliteFire' | 'rocketFire' | 'slowdown' | 'invisibility' | 'tower' | 'star' | 'ship' | 'linkor';
 

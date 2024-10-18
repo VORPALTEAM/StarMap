@@ -139,7 +139,7 @@ import { BoxContentPopup, ConfirmPopup, InventoryCardPopup, Loader } from '@/com
 import { useBattleStore, useWalletStore } from '@/stores';
 import { mapAssets } from '@/utils';
 import { mapStores } from 'pinia';
-import { BlockchainConnectService } from '~/blockchainTotal';
+import { BlockchainConnectService } from '~/blockchain';
 
 const baseTabs = ['inventory', 'events']
 export default {

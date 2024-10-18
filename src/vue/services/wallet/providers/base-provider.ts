@@ -1,10 +1,10 @@
 import { Ref } from "vue";
-import { BlockchainConnectService } from "~/blockchainTotal";
-import { getLaserLevel } from "~/blockchainTotal/getters/boxes";
-import { getBoxDataWeb2, getUserBoxesToOpenWeb2 } from "~/blockchainTotal/getters/boxesWeb2";
-import { GetCreationCost, GetSingleStarData, GetStarDataFromServer, GetStarsCount, getWeb2StarDataFromServer, RequiredPlasmaToApprove } from "~/blockchainTotal/getters/stars";
-import { GetAllowance, GetBalance } from "~/blockchainTotal/getters/tokens";
-import { Coords, StarData, StarList, fuelTarget } from "~/blockchainTotal/types";
+import { BlockchainConnectService } from "~/blockchain";
+import { getLaserLevel } from "~/blockchain/getters/boxes";
+import { getBoxDataWeb2, getUserBoxesToOpenWeb2 } from "~/blockchain/getters/boxesWeb2";
+import { GetCreationCost, GetSingleStarData, GetStarDataFromServer, GetStarsCount, getWeb2StarDataFromServer, RequiredPlasmaToApprove } from "~/blockchain/getters/stars";
+import { GetAllowance, GetBalance } from "~/blockchain/getters/tokens";
+import { Coords, StarData, StarList, fuelTarget } from "~/blockchain/types";
 
 export abstract class BaseProvider {
   abstract account: Ref<string>

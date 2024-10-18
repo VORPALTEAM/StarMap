@@ -1,4 +1,4 @@
-import { BoxDataWeb2, BoxItemType } from "~/blockchainTotal/getters/boxesWeb2"
+import { BoxDataWeb2, BoxItemType } from "~/blockchain/getters/boxesWeb2"
 
 const iconByType: { [key in BoxItemType | 'token']: string } = {
   'vrp': '/gui/images/icons/coins.png',

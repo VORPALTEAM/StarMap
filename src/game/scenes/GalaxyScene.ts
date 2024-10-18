@@ -16,7 +16,7 @@ import { AudioMng } from '../audio/AudioMng';
 import { AudioAlias } from '../audio/AudioData';
 import { BattleAcceptScreenMng, BattleAcceptScreenMngEvent } from '../controllers/BattleAcceptScreenMng';
 import { MyUtils } from '../utils/MyUtils';
-import { BlockchainConnectService } from '~/blockchainTotal';
+import { BlockchainConnectService } from '~/blockchain';
 import sizeof from 'object-sizeof';
 import { GameEvent } from '../events/Types';
 

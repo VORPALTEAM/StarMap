@@ -1,4 +1,4 @@
-import { Race } from '~/blockchainTotal/types';
+import { Race } from '~/blockchain/types';
 
 export const RACES: Record<Race, string> = {
   Waters: 'waters',

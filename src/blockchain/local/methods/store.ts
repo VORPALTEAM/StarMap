@@ -1,5 +1,5 @@
-import { fastDataServerUrl } from "~/blockchainTotal/config/network";
-import { TelegramAuthData } from "~/blockchainTotal/types";
+import { fastDataServerUrl } from "~/blockchain/config/network";
+import { TelegramAuthData } from "~/blockchain/types";
 
 export interface StoreItem {
     id: number;

@@ -3,9 +3,9 @@ import { BaseProvider } from "@/services/wallet/providers/base-provider";
 import { useWeb3ModalAccount, useWeb3ModalProvider } from "@web3modal/ethers5/vue";
 import { ethers } from "ethers";
 import { Ref, ref } from "vue";
-import { contracts } from "~/blockchainTotal/config/network";
-import { Coords, fuelTarget } from "~/blockchainTotal/types";
-import { ConnectWalletWC } from "~/blockchainTotal/walletconnect/auth";
+import { contracts } from "~/blockchain/config/network";
+import { Coords, fuelTarget } from "~/blockchain/types";
+import { ConnectWalletWC } from "~/blockchain/walletconnect/auth";
 import {
   ApproveFor,
   CreateNewStarWC,
@@ -13,7 +13,7 @@ import {
   MintToken,
   OpenBox,
   RefuelStar,
-} from "~/blockchainTotal/walletconnect/methods";
+} from "~/blockchain/walletconnect/methods";
 
 export class WalletConnectProvider extends BaseProvider {
   account = ref('');

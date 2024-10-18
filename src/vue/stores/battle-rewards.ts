@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { useWallet } from '@/services';
 import { useScenesStore } from '@/stores/scenes';
 import { LogMng } from '~/monax/LogMng';
-import { web2assets } from '~/blockchainTotal/getters/boxesWeb2';
+import { web2assets } from '~/blockchain/getters/boxesWeb2';
 import { mapAssets } from '@/utils';
 
 export const useBattleRewardsStore = defineStore('battleRewards', () => {

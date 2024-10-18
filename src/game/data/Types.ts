@@ -1,4 +1,4 @@
-import { Race } from "~/blockchainTotal/types";
+import { Race } from "~/blockchain/types";
 
 export type GalaxyData = {
     starsCount: number;

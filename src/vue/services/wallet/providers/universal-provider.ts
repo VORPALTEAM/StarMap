@@ -1,12 +1,12 @@
 import {
   BlockchainConnectService, LocalMethods
-} from "~/blockchainTotal";
-import { Coords, fuelTarget } from "~/blockchainTotal/types";
+} from "~/blockchain";
+import { Coords, fuelTarget } from "~/blockchain/types";
 import { BaseProvider } from "./base-provider";
 import { Star } from "@/models";
 import { ref } from "vue";
-import { OpenBoxWeb2 } from "~/blockchainTotal/local/methods/box";
-import { getUserBoxesToOpenWeb2 } from "~/blockchainTotal/getters/boxesWeb2";
+import { OpenBoxWeb2 } from "~/blockchain/local/methods/box";
+import { getUserBoxesToOpenWeb2 } from "~/blockchain/getters/boxesWeb2";
 
 export class UniversalProvider extends BaseProvider {
   account = ref('');

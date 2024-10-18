@@ -1,19 +1,19 @@
 import {
   SubscribeOnAccountChanging,
   WindowEthAuth
-} from "~/blockchainTotal/windowEth";
+} from "~/blockchain/windowEth";
 import {
   ApprovePlasma,
   CreateNewStar,
   IncreaseStarLevel,
   MintPlasma,
   RefuelStar
-} from "~/blockchainTotal/windowEth/methods";
-import { Coords, fuelTarget } from "~/blockchainTotal/types";
+} from "~/blockchain/windowEth/methods";
+import { Coords, fuelTarget } from "~/blockchain/types";
 import { BaseProvider } from "./base-provider";
 import { Star } from "@/models";
 import { ref } from "vue";
-import { OpenBox } from "~/blockchainTotal/windowEth/methods";
+import { OpenBox } from "~/blockchain/windowEth/methods";
 
 export class MetamaskProvider extends BaseProvider {
   account = ref('');

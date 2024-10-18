@@ -1,10 +1,10 @@
 import Web3 from "web3";
 import { ethers } from 'ethers';
 import { jsonABIs, network } from "../../config";
-import { fastDataServerUrl } from "~/blockchainTotal/config/network";
-import { BlockchainConnectService } from "~/blockchainTotal";
-import { TelegramAuthData } from "~/blockchainTotal/types";
-import { GetGameAssetsWeb2, web2assets } from "~/blockchainTotal/getters/boxesWeb2";
+import { fastDataServerUrl } from "~/blockchain/config/network";
+import { BlockchainConnectService } from "~/blockchain";
+import { TelegramAuthData } from "~/blockchain/types";
+import { GetGameAssetsWeb2, web2assets } from "~/blockchain/getters/boxesWeb2";
 
 export async function OpenBox (address: string, _boxId: number) {
     return new Promise(async (resolve, reject) => {

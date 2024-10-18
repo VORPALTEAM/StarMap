@@ -1,4 +1,4 @@
-import { BoxDataWeb2, BoxItemType } from "~/blockchainTotal/getters/boxesWeb2"
+import { BoxDataWeb2, BoxItemType } from "~/blockchain/getters/boxesWeb2"
 
 let namesByType: { [key in BoxItemType | 'token']: string } = {
   'vrp': 'VRP',

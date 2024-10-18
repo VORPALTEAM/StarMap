@@ -2,7 +2,7 @@ import { MyEventDispatcher } from "../basics/MyEventDispatcher";
 import { Socket, io } from "socket.io-client";
 import { GlobalParams } from "../data/GlobalParams";
 import { ClaimRewardData, DebugTestData, GameCompleteData, AcceptScreenData, PackTitle, SkillRequest, StartGameData, SearchGameData, SignData, PlayerLoadingData, Emotion, EmotionData, DuelInfo, MessagePack, ShopData } from "./Types";
-import { BlockchainConnectService } from "~/blockchainTotal";
+import { BlockchainConnectService } from "~/blockchain";
 import { GameEventDispatcher } from "../events/GameEvents";
 
 export enum ConnectionEvent {

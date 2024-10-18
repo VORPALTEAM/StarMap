@@ -1,4 +1,4 @@
-import { Coords } from '~/blockchainTotal/types';
+import { Coords } from '~/blockchain/types';
 
 export class StarScreenPosition {
   x: number;
