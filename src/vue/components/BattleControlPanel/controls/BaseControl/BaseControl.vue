@@ -114,6 +114,7 @@ import { DefineComponent, PropType } from 'vue';
 import { BattleActionType } from '@/types';
 import { MyMath } from '~/monax/MyMath';
 import { BattleSkill } from '@/types';
+import { ref } from 'vue';
 
 export default {
   name: 'BaseControl',
@@ -141,14 +142,16 @@ export default {
       type: Object as PropType<BattleSkill>,
     },
   },
+
   data() {
     return {
       dragging: false,
       dragStartX: 0,
       dragStartY: 0,
-      levelUp: false,
       touchStartX: 0,
-      touchStartY: 0,
+      touchStartY: 0,  
+      previousY: 0,
+      directionChanged: false,  
     };
   },
   computed: {
@@ -186,14 +189,6 @@ export default {
     }
   },
 
-  mounted() {
- 
-},
-
-beforeDestroy() {
- 
-},
-
   methods: {
   handleDragStart(event: DragEvent) {
     this.dragging = true;
@@ -201,64 +196,99 @@ beforeDestroy() {
     // Save initial positions
     this.dragStartX = event.clientX;
     this.dragStartY = event.clientY;
+    this.previousY = this.dragStartY;
     const content = this.$refs.skillContent as HTMLElement;
     const svgElement = content.querySelector('svg');
     svgElement.style.setProperty('opacity', '1', 'important');
   },
   handleDrag(event: DragEvent) {
     if (!event.clientX || !event.clientY) return;
-    
-    const deltaX = event.clientX - this.dragStartX;
-    const deltaY = event.clientY - this.dragStartY;
-    
+    const deltaX = this.dragStartX - event.clientX;
+    const deltaY = this.dragStartY - event.clientY;
     const content = this.$refs.skillContent as HTMLElement;
     const svgElement = content.querySelector('svg');
-    content.style.transform = `translate(${deltaX}px, ${deltaY}px)`
+    
+    if (event.clientY !== this.previousY) {
+      if (deltaY > 0 && this.previousY > event.clientY) {
+        this.directionChanged = true;
+        svgElement.style.setProperty('opacity', '1', 'important');
+      } else {
+        this.directionChanged = false;
+        svgElement.style.setProperty('opacity', '0.3', 'important');
+      }
+      this.previousY = event.clientY;
+  }
+    content.style.transform = `translateY(${-Math.max(0, deltaY)}px)`;
   },
   handleDragEnd(event: DragEvent) {
     this.dragging = false;
     const content = this.$refs.skillContent as HTMLElement;
+    const svgElement = content.querySelector('svg');
     content.style.transform = '';
     const deltaX = event.clientX - this.dragStartX;
     const deltaY = event.clientY - this.dragStartY;
-    if (Math.abs(deltaX) > 0 || Math.abs(deltaY) > 0) {
+    if (Math.abs(deltaY) > 0 && this.directionChanged) {
       this.$emit('levelUp');
+    } else {
+      if(this.params.level == 0){
+        svgElement.style.setProperty('opacity', '0.3', 'important');
+      }
+      else {
+        svgElement.style.setProperty('opacity', '1', 'important');
+      }
     }
   },
   handleDrop() {
 },
   handleTouchStart(event: TouchEvent) {
-    if (!this.canLevelUp || this.hasCooldown) return;
     this.dragging = true;
     const touch = event.touches[0];
     this.touchStartX = touch.clientX;
     this.touchStartY = touch.clientY;
+    this.previousY = this.touchStartX;
     const content = this.$refs.skillContent as HTMLElement;
     const svgElement = content.querySelector('svg');
     svgElement.style.setProperty('opacity', '1', 'important');
   },
   handleTouchMove(event: TouchEvent) {
-    if (!this.dragging) return;
     event.preventDefault();
+    if (!this.dragging || !this.canLevelUp) return;
     const touch = event.touches[0];
-    const deltaX = touch.clientX - this.touchStartX;
-    const deltaY = touch.clientY - this.touchStartY;
-    
+    const deltaY = this.touchStartY - touch.clientY;
     const content = this.$refs.skillContent as HTMLElement;
-    content.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+    const svgElement = content.querySelector('svg');
+    
+    if (touch.clientY !== this.previousY) {
+      if (deltaY > 0 && this.previousY > touch.clientY) {
+        this.directionChanged = true;
+        svgElement.style.setProperty('opacity', '1', 'important');
+      } else {
+        this.directionChanged = false;
+        svgElement.style.setProperty('opacity', '0.3', 'important');
+      }
+      this.previousY = touch.clientY;
+  }
+    content.style.transform = `translateY(${-Math.max(0, deltaY)}px)`;
   },
   handleTouchEnd(event: TouchEvent) {
     if (!this.dragging) return;
     this.dragging = false;
     const content = this.$refs.skillContent as HTMLElement;
+    const svgElement = content.querySelector('svg');
     content.style.transform = '';
-
     const touch = event.changedTouches[0];
-    const deltaX = touch.clientX - this.touchStartX;
     const deltaY = touch.clientY - this.touchStartY;
-    if (Math.abs(deltaX) > 10 || Math.abs(deltaY) > 10) {
+    if (Math.abs(deltaY) > 0 && this.directionChanged) {
       this.$emit('levelUp');
+    } else {
+      if(this.params.level == 0){
+        svgElement.style.setProperty('opacity', '0.3', 'important');
+      }
+      else {
+        svgElement.style.setProperty('opacity', '1', 'important');
+      }
     }
+
   }
   }
 }

@@ -48,6 +48,7 @@ export default {
             ];
 
             props.inventoryList.forEach((id, index) => {
+                console.log(id, index, 'id, index');
                 if (index < 2) {
                     if(id == null) {
                         result[index] = { order: id, name: '', disabled: true };
