@@ -13,24 +13,30 @@
       @touchmove="handleTouchMove"
       @touchend="handleTouchEnd"
     >
-   <svg 
-    class="BaseControl__outline" 
-    viewBox="0 0 74 85" 
-    fill="none" 
-    xmlns="http://www.w3.org/2000/svg">
-      <path 
-        d="M38.25 1.80978C37.87 1.59036 37.4388 1.47485 37 1.47485C36.5612 1.47485 36.1301 1.59036 35.75 1.80978L2.25 21.151C1.86995 21.3704 1.55436 21.686 1.33493 22.0661C1.11551 22.4461 0.999997 22.8772 1 23.3161L1.00001 61.9986C0.999999 62.4374 1.11551 62.8685 1.33493 63.2486C1.55436 63.6286 1.86995 63.9442 2.25 64.1636L35.75 83.5049C36.1301 83.7243 36.5612 83.8398 37 83.8398C37.4388 83.8398 37.87 83.7243 38.25 83.5049L71.75 64.1636C72.1301 63.9442 72.4456 63.6286 72.6651 63.2486C72.8845 62.8685 73 62.4374 73 61.9986V23.3161C73 22.8772 72.8845 22.4461 72.6651 22.0661C72.4456 21.686 72.1301 21.3704 71.75 21.151L38.25 1.80978Z" 
-        stroke="currentColor" 
-        stroke-width="2" 
-        stroke-linecap="round" 
-        stroke-linejoin="round"
-        fill-opacity="0.4"
-        fill="currentColor"
-        />
-    </svg>
+   <template v-if="isInventory">
+       <img :src="this.name ? `/gui/images/inventory-list/icon-fill_64.webp` : `/gui/images/inventory-list/icon_64.webp`" />
+   </template>
+   <template v-else>
+       <svg 
+           class="BaseControl__outline" 
+           viewBox="0 0 74 85" 
+           fill="none" 
+           xmlns="http://www.w3.org/2000/svg">
+           <path 
+               d="M38.25 1.80978C37.87 1.59036 37.4388 1.47485 37 1.47485C36.5612 1.47485 36.1301 1.59036 35.75 1.80978L2.25 21.151C1.86995 21.3704 1.55436 21.686 1.33493 22.0661C1.11551 22.4461 0.999997 22.8772 1 23.3161L1.00001 61.9986C0.999999 62.4374 1.11551 62.8685 1.33493 63.2486C1.55436 63.6286 1.86995 63.9442 2.25 64.1636L35.75 83.5049C36.1301 83.7243 36.5612 83.8398 37 83.8398C37.4388 83.8398 37.87 83.7243 38.25 83.5049L71.75 64.1636C72.1301 63.9442 72.4456 63.6286 72.6651 63.2486C72.8845 62.8685 73 62.4374 73 61.9986V23.3161C73 22.8772 72.8845 22.4461 72.6651 22.0661C72.4456 21.686 72.1301 21.3704 71.75 21.151L38.25 1.80978Z" 
+               stroke="currentColor" 
+               stroke-width="2" 
+               stroke-linecap="round" 
+               stroke-linejoin="round"
+               fill-opacity="0.4"
+               fill="currentColor"
+           />
+       </svg>
+   </template>
     <div
       v-if="icon"
-      class="BaseControl__icon"
+      class=""
+      :class="['BaseControl__icon', { 'is-inventory': isInventory }]"
     >
       <component :is="icon"/>
     </div>
@@ -141,6 +147,10 @@ export default {
     params: {
       type: Object as PropType<BattleSkill>,
     },
+    isInventory: {
+      type: Boolean,
+      default: false
+    }
   },
 
   data() {
@@ -230,7 +240,7 @@ export default {
     if (Math.abs(deltaY) > 0 && this.directionChanged) {
       this.$emit('levelUp');
     } else {
-      if(this.params.level == 0){
+      if(this.params?.level == 0){
         svgElement.style.setProperty('opacity', '0.3', 'important');
       }
       else {
@@ -281,7 +291,7 @@ export default {
     if (Math.abs(deltaY) > 0 && this.directionChanged) {
       this.$emit('levelUp');
     } else {
-      if(this.params.level == 0){
+      if(this.params?.level == 0){
         svgElement.style.setProperty('opacity', '0.3', 'important');
       }
       else {

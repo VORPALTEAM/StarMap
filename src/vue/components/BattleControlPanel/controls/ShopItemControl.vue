@@ -1,17 +1,23 @@
 <template>
     <div class="ShopItemControl__row">
-        <div v-for="(item, index) in displayItems" :key="index" class="ShopItemControl__item" @click="handleClick(item.order)">
-            <div v-if="item.name != ''">
+        <div v-for="(item, index) in displayItems" :key="index" class="ShopItemControl__item">
+            <div 
+            v-if="item.name != ''" 
+            :class="['ShopItemControl__item-name', { '--index': index === 1 }]"
+            @click="handleClick(item.order)"
+            >
                 <BaseControl 
                 :name="item.name" 
                 :disabled="item.disabled"
                 :active="!item.disabled"
+                :is-inventory="true"
                 />
             </div>
-            <div v-else>
+            <div v-else :class="['ShopItemControl__item-name', { '--index': index === 1 }]">
                 <BaseControl 
-                    :disabled="item.disabled"
-                    :active="!item.disabled"
+                :disabled="item.disabled"
+                :active="!item.disabled"
+                :is-inventory="true"
                 />
             </div>
         </div>
@@ -81,11 +87,28 @@ export default {
 
 <style>
 .ShopItemControl__row {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     pointer-events: all;
     gap: 5px;
+}
+
+.ShopItemControl__item {
+    width: 32px;
+    height: 36px;
+}
+
+.ShopItemControl__item-name {
+    position: absolute;
+    bottom: 36px;
+    left: -13px;
+    width: 58px;
+}
+
+.--index {
+    bottom: -12px;
 }
 </style>

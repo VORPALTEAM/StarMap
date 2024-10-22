@@ -115,6 +115,14 @@
   height: 90%;
 }
 
+
+.BaseControl__icon.is-inventory >svg {
+  width: 63%;
+  height: 90%;
+}
+
+
+
 .BaseControl__content {
   padding-bottom: 2%;
   color: #00FFFF;
