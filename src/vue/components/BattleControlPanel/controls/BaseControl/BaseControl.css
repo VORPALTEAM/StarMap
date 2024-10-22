@@ -2,7 +2,6 @@
   position: relative;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
   width: 100%;
   height: 100%;
 }
@@ -22,6 +21,14 @@
   z-index: 5;
 }
 
+.BaseControl__animated-inventory {
+  position: absolute;
+  left:50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+}
 
 .BaseControl__outline {
   width: 100%;
@@ -114,14 +121,6 @@
   width: 90%;
   height: 90%;
 }
-
-
-.BaseControl__icon.is-inventory >svg {
-  width: 63%;
-  height: 90%;
-}
-
-
 
 .BaseControl__content {
   padding-bottom: 2%;

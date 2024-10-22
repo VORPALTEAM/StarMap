@@ -1,5 +1,8 @@
 .container {
     position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
     top: 80px;
     padding-left: 10px;
     padding-right: 10px;
@@ -7,6 +10,7 @@
     
 }
 .ShopMenu {
+    max-width: 410px;
     display: flex;
     position: relative;
     align-items: center;

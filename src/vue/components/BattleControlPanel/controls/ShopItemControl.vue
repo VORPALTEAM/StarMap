@@ -4,7 +4,7 @@
             <div 
             v-if="item.name != ''" 
             :class="['ShopItemControl__item-name', { '--index': index === 1 }]"
-            @click="handleClick(item.order)"
+            @click="handleClick(item.order, index)"
             >
                 <BaseControl 
                 :name="item.name" 
@@ -17,7 +17,7 @@
                 <BaseControl 
                 :disabled="item.disabled"
                 :active="!item.disabled"
-                :is-inventory="true"
+                :is-inventory="this.battleStore.shop.removedInventoryId == index"
                 />
             </div>
         </div>
@@ -28,11 +28,15 @@
 import { BaseControl } from './BaseControl';
 import { PropType, computed } from 'vue';
 import { ShopItemData } from '~/game/battle/Types';
-
+import { mapStores } from 'pinia';
+import { useBattleStore } from '@/stores';
 export default {
     name: 'shopItemControl',
     components: {
         BaseControl
+    },
+    computed: {
+        ...mapStores(useBattleStore),
     },
     props: {
         items: {
@@ -73,12 +77,13 @@ export default {
         };
     },
     methods: {
-        handleClick(itemId: number) {
+        handleClick(itemId: number, index: number) {
             if(itemId == null) {
                 return;
             }
             else {
                 this.$client.onBattleInventoryItemActivate(itemId);
+                this.battleStore.shop.setRemovedInventoryId(index);
             }
         }
     }
@@ -90,9 +95,6 @@ export default {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    pointer-events: all;
     gap: 5px;
 }
 
@@ -102,13 +104,7 @@ export default {
 }
 
 .ShopItemControl__item-name {
-    position: absolute;
-    bottom: 36px;
-    left: -13px;
-    width: 58px;
+    height: 100%;
 }
 
-.--index {
-    bottom: -12px;
-}
 </style>

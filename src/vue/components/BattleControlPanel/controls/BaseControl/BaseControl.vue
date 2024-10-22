@@ -13,8 +13,10 @@
       @touchmove="handleTouchMove"
       @touchend="handleTouchEnd"
     >
-   <template v-if="isInventory">
-       <img :src="this.name ? `/gui/images/inventory-list/icon-fill_64.webp` : `/gui/images/inventory-list/icon_64.webp`" />
+   <template v-if="isInventory && isAnimatedInventory">
+    <div class="BaseControl__animated-inventory">
+      <img :src="this.name ? `/gui/images/inventory-list/icon-fill_64.webp` : `/gui/images/inventory-list/icon_64.webp`" />
+    </div>
    </template>
    <template v-else>
        <svg 
@@ -35,9 +37,8 @@
    </template>
     <div
       v-if="icon"
-      class=""
-      :class="['BaseControl__icon', { 'is-inventory': isInventory }]"
-    >
+      class='BaseControl__icon'
+      >
       <component :is="icon"/>
     </div>
     <div
@@ -162,8 +163,10 @@ export default {
       touchStartY: 0,  
       previousY: 0,
       directionChanged: false,  
+      isAnimatedInventory: true,
     };
   },
+
   computed: {
     hasCooldown() {
       return this.cooldown !== null && this.cooldown !== undefined;
@@ -196,6 +199,14 @@ export default {
     },
     canLevelUp() {
       return this.params?.levelUpAvailable || false
+    }
+  },
+
+  mounted() {
+    if(this.isInventory) {
+      setTimeout(() => {
+        this.isAnimatedInventory = false;
+      }, 1000);
     }
   },
 
