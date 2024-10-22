@@ -7,6 +7,7 @@ export const useBattleShopStore = defineStore('battleShopStore', () => {
     const pendingList = ref<Set<number>>(new Set())
     const purchasedList = ref<Set<number>>(new Set())
     const inventoryList = ref<number[]>([])
+    const removedInventoryId = ref<number | null>(null)
 
     const setItems = (value: ShopItemData[]) => {
         items.value = value
@@ -36,12 +37,26 @@ export const useBattleShopStore = defineStore('battleShopStore', () => {
         inventoryList.value = itemsId
     }
 
+    const setRemovedInventoryId = (itemId: number) => {
+        removedInventoryId.value = itemId
+    }
+
+    const clearRemovedInventoryId = () => {
+        removedInventoryId.value = null
+    }
+
     const clearInventoryList = () => {
         inventoryList.value = []
     }
 
     const clearPendingList = () => {
         pendingList.value.clear()
+    }
+
+    const clearList = () => {
+        clearInventoryList()
+        clearPendingList()
+        clearRemovedInventoryId()
     }
    
     const reset = () => {
@@ -53,6 +68,7 @@ export const useBattleShopStore = defineStore('battleShopStore', () => {
         pendingList,
         purchasedList,
         inventoryList,
+        removedInventoryId,
         purchasedItemsArray,
         setItems,
         addToPendingList,
@@ -63,6 +79,9 @@ export const useBattleShopStore = defineStore('battleShopStore', () => {
         reset,   
         updateInventoryList,
         clearInventoryList,
+        setRemovedInventoryId,
+        clearRemovedInventoryId,
+        clearList,
     };
 });
 

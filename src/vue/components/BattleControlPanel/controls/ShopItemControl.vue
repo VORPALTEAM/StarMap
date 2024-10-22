@@ -1,17 +1,23 @@
 <template>
     <div class="ShopItemControl__row">
-        <div v-for="(item, index) in displayItems" :key="index" class="ShopItemControl__item" @click="handleClick(item.order)">
-            <div v-if="item.name != ''">
+        <div v-for="(item, index) in displayItems" :key="index" class="ShopItemControl__item">
+            <div 
+            v-if="item.name != ''" 
+            :class="['ShopItemControl__item-name', { '--index': index === 1 }]"
+            @click="handleClick(item.order, index)"
+            >
                 <BaseControl 
                 :name="item.name" 
                 :disabled="item.disabled"
                 :active="!item.disabled"
+                :is-inventory="true"
                 />
             </div>
-            <div v-else>
+            <div v-else :class="['ShopItemControl__item-name', { '--index': index === 1 }]">
                 <BaseControl 
-                    :disabled="item.disabled"
-                    :active="!item.disabled"
+                :disabled="item.disabled"
+                :active="!item.disabled"
+                :is-inventory="this.battleStore.shop.removedInventoryId == index"
                 />
             </div>
         </div>
@@ -22,11 +28,15 @@
 import { BaseControl } from './BaseControl';
 import { PropType, computed } from 'vue';
 import { ShopItemData } from '~/game/battle/Types';
-
+import { mapStores } from 'pinia';
+import { useBattleStore } from '@/stores';
 export default {
     name: 'shopItemControl',
     components: {
         BaseControl
+    },
+    computed: {
+        ...mapStores(useBattleStore),
     },
     props: {
         items: {
@@ -48,6 +58,7 @@ export default {
             ];
 
             props.inventoryList.forEach((id, index) => {
+                console.log(id, index, 'id, index');
                 if (index < 2) {
                     if(id == null) {
                         result[index] = { order: id, name: '', disabled: true };
@@ -66,12 +77,13 @@ export default {
         };
     },
     methods: {
-        handleClick(itemId: number) {
+        handleClick(itemId: number, index: number) {
             if(itemId == null) {
                 return;
             }
             else {
                 this.$client.onBattleInventoryItemActivate(itemId);
+                this.battleStore.shop.setRemovedInventoryId(index);
             }
         }
     }
@@ -80,11 +92,19 @@ export default {
 
 <style>
 .ShopItemControl__row {
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    pointer-events: all;
     gap: 5px;
 }
+
+.ShopItemControl__item {
+    width: 32px;
+    height: 36px;
+}
+
+.ShopItemControl__item-name {
+    height: 100%;
+}
+
 </style>
